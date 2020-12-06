@@ -8,17 +8,23 @@ opt_model = cpx.Model(name="MIP Model")
 n = 10
 range_index = range(1, n+1)
 
+c_max_csv = open('data/c_max.csv')
+d_csv = open('data/d.csv')
+
+df_c_max = pd.read_csv(c_max_csv, header = None, index_col=None).values
+df_d_csv = pd.read_csv(d_csv, header = None, index_col=None).values
+
 # We may use the csv files in data to set up true c_max, d and s
-c_max = {(i, j): random.randint(0, 35)
+c_max = {(i, j): df_c_max[i-1][j-1]
          for i in range_index for j in range_index if i != j}
 
-d = {(i, j): random.normalvariate(0, 1)
+d = {(i, j): df_d_csv[i-1][j-1]
      for i in range_index for j in range_index if i != j}
 
 s = {i: random.randint(0, 1000) for i in range_index}
 
 # The epsilon here should be carefully set
-ep = 0.6
+ep = 0.5
 
 # The decision variable is the capacity c
 c_vars = {
