@@ -2,11 +2,18 @@ import random
 import docplex.mp.model as cpx
 import math
 import pandas as pd
+import os
 
 opt_model = cpx.Model(name="MIP Model")
 
 n = 10
 range_index = range(1, n+1)
+
+if not os.path.exists('data'):
+    os.mkdir('data')
+
+if not os.path.exists('result'):
+    os.mkdir('result')
 
 c_max_csv = open('data/c_max.csv')
 d_csv = open('data/d.csv')
